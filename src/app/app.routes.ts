@@ -1,12 +1,25 @@
-// app.routes.ts - MAPA DE ROTAS: "quando a URL for X, mostre o componente Y" dentro do <router-outlet>.
 import { Routes } from '@angular/router';
-import { CadastroAluno } from './pages/cadastro-aluno/cadastro-aluno';
-import { Contato } from './pages/contato/contato';
-import { Inicio } from './pages/inicio/inicio';
 
 export const routes: Routes = [
-  { path: '', component: Inicio, title: 'Início | Projeto SCTEC' },
-  { path: 'contato', component: Contato, title: 'Contato | Projeto SCTEC' },
-  { path: 'cadastro', component: CadastroAluno, title: 'Cadastro | Projeto SCTEC' },
+  {
+    path: '',
+    loadComponent: () => import('./pages/inicio/inicio').then((m) => m.Inicio),
+    title: 'Início | Projeto SCTEC',
+  },
+  {
+    path: 'contato',
+    loadComponent: () => import('./pages/contato/contato').then((m) => m.Contato),
+    title: 'Contato | Projeto SCTEC',
+  },
+  {
+    path: 'cadastro',
+    loadComponent: () => import('./pages/cadastro-aluno/cadastro-aluno').then((m) => m.CadastroAluno),
+    title: 'Cadastro | Projeto SCTEC',
+  },
+  {
+    path: 'cursos',
+    loadChildren: () => import('./features/cursos.routes').then((m) => m.CURSOS_ROUTES),
+    title: 'Cursos | Projeto SCTEC',
+  },
   { path: '**', redirectTo: '' },
 ];
