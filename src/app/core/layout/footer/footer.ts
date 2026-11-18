@@ -1,9 +1,11 @@
+// footer.ts - RODAPÉ do site (core/layout). Criado com: ng g c core/layout/footer
 import { Component } from '@angular/core';
 
 @Component({
-  imports: [],
   selector: 'app-footer',
-  styleUrl: './footer.css',
   templateUrl: './footer.html',
+  styleUrl: './footer.scss',
 })
-export class Footer {}
+export class Footer {
+  protected readonly ano = new Date().getFullYear();
+}

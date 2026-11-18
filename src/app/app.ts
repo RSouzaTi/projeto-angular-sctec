@@ -1,16 +1,14 @@
-// app.ts - COMPONENTE RAIZ (o "esqueleto" do site): cabeçalho + menu + <router-outlet> + rodapé.
-// As páginas (Início, Contato, Cadastro) aparecem dentro do <router-outlet>, conforme a rota.
+// app.ts - COMPONENTE RAIZ: agora só MONTA o layout (header + página + footer).
+// Semana 6: o cabeçalho e o rodapé viraram componentes próprios em core/layout.
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
+import { Footer } from '@core/layout/footer/footer';
+import { Header } from '@core/layout/header/header';
 
 @Component({
-  selector: 'app-root',                                   // tag usada no index.html: <app-root>
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],  // o que o HTML deste componente usa
-  templateUrl: './app.html',                              // o HTML do componente
-  styleUrl: './app.css',                                  // o CSS do componente
+  selector: 'app-root',
+  imports: [RouterOutlet, Header, Footer],
+  templateUrl: './app.html',
+  styleUrl: './app.scss',
 })
-export class App {
-  protected readonly titulo = 'Portal do Aluno';
-  protected readonly curso = 'Desenvolvedor Front-End [Angular] - SCTEC';
-  protected readonly ano = new Date().getFullYear();
-}
+export class App {}
