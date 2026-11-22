@@ -31,12 +31,12 @@ export class Inicio {
       semana: 'Semana 6 · Aula 2',
       titulo: 'SASS e responsividade',
       itens: ['Migração para SCSS', 'Variáveis, mapas, mixins e partials', 'Menu responsivo (mobile-first)', 'Grid, max-width e object-fit'],
-      atual: true,
     },
     {
       semana: 'Semana 6 · Aula 3',
       titulo: 'Angular Material e terceiros',
-      itens: ['ng add @angular/material', 'Toolbar, cards, form fields, snackbar', 'Máscaras com ngx-mask'],
+      itens: ['ng add @angular/material + tema M3', 'Toolbar, cards, form fields e snackbar', 'Máscaras com ngx-mask'],
+      atual: true,
     },
   ];
 }

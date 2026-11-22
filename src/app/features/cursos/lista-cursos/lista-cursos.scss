@@ -1,44 +1,46 @@
 @use 'mixins' as *;
 
-// TODO 5 (GRID + OBJECT-FIT) - parte A: transforme a lista num GRID responsivo SEM media query:
-  .lista {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: espaco(2.5);
-  }
-// auto-fill + minmax(260px, 1fr) = "coloque quantas colunas de no mínimo 260px couberem".
+// O GRID da Aula 2 continua igual: o Material cuida do visual do cartão, nós cuidamos do layout.
+.lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: espaco(2.5);
+}
 
 .curso {
-  @include cartao(0); // mixin com parâmetro: cartão SEM padding (a imagem encosta na borda)
-  margin: 0;
-  overflow: hidden; // corta a imagem nos cantos arredondados
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  transition: transform 0.2s ease;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(15, 40, 70, 0.16);
+  &:hover { transform: translateY(-4px); }
+
+  // object-fit da Aula 2 aplicado na imagem do mat-card
+  img[mat-card-image] {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    margin: 0 0 espaco(1);
   }
 
-  // TODO 5 (GRID + OBJECT-FIT) - parte B: padronize as capas (hoje cada uma tem um tamanho):
-    img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-    }
-  // Teste também  object-fit: contain  e  object-fit: fill  e compare o resultado!
+  mat-card-content {
+    flex: 1;
 
-  .conteudo {
-    padding: espaco(2);
+    p { color: var(--texto-suave); font-size: 14px; margin: 0; }
+  }
+
+  mat-card-actions {
     display: flex;
-    flex-direction: column;
-    gap: espaco(0.75);
-    flex: 1; // ocupa a altura que sobrar: os rodapés dos cartões ficam alinhados
+    justify-content: space-between;
+    align-items: center;
+    padding: espaco(1) espaco(2) espaco(2);
   }
+}
 
-  .tag { align-self: flex-start; }
-  h3 { margin: 0; font-size: 18px; }
-  p { color: var(--texto-suave); font-size: 14px; margin: 0; }
-  small { margin-top: auto; font-weight: 600; color: var(--azul); }
+.carga {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  color: var(--azul);
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
 }

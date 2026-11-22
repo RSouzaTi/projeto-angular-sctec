@@ -1,11 +1,13 @@
-// lista-cursos.ts - PÁGINA da feature cursos (rota /cursos). Criado com: ng g c features/cursos/lista-cursos
+// lista-cursos.ts - PÁGINA da feature cursos (rota /cursos).
+// Aula 3: os cartões viraram <mat-card>; o SharedModule já traz os módulos do Material.
 import { Component, inject } from '@angular/core';
-import { SharedModule } from '@shared';
+import { SharedModule } from '../../../shared/shared-module';
+import { PageHeader } from '../../../shared/components/page-header/page-header';
 import { CursoService } from '../curso-service';
 
 @Component({
-  selector: 'app-lista-cursos',
-  imports: [SharedModule], // SharedModule traz o PageHeader (e o resto que é compartilhado)
+  standalone: true,
+  imports: [SharedModule, PageHeader],
   templateUrl: './lista-cursos.html',
   styleUrl: './lista-cursos.scss',
 })
