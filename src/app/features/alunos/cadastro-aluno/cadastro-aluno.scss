@@ -56,12 +56,3 @@ dl {
 }
 dt { font-weight: 600; color: var(--texto-suave); }
 dd { margin: 0; overflow-wrap: anywhere; }
-
-// Usado só ENQUANTO o CEP ainda não virou mat-form-field (TODO 5). Depois pode apagar.
-.linha-cep {
-  display: flex;
-  flex-wrap: wrap;
-  gap: espaco(1);
-
-  input { flex: 1 1 160px; max-width: 220px; }
-}

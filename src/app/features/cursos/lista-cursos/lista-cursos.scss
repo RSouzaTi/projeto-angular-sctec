@@ -1,6 +1,6 @@
 @use 'mixins' as *;
 
-// O GRID da Aula 2 continua igual: o Material cuida do visual do cartão, nós cuidamos do layout.
+// O GRID da Semana 6 continua igual: o Material cuida do cartão, nós cuidamos do layout.
 .lista {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -13,9 +13,12 @@
 
   &:hover { transform: translateY(-4px); }
 
-  // object-fit da Aula 2 aplicado na imagem do mat-card
+  // Semana 7: cartão de curso inscrito ganha borda verde
+  &.inscrito { outline: 3px solid var(--ok); }
+
   img[mat-card-image] {
     width: 100%;
+    height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     margin: 0 0 espaco(1);
@@ -31,6 +34,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: espaco(1);
     padding: espaco(1) espaco(2) espaco(2);
   }
 }
@@ -43,4 +48,16 @@
   color: var(--azul);
 
   mat-icon { font-size: 20px; width: 20px; height: 20px; }
+}
+
+// Carregando / erro
+.estado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: espaco(1);
+  padding: espaco(5) espaco(2);
+  color: var(--texto-suave);
+
+  &.erro { color: var(--erro); }
 }

@@ -1,25 +1,37 @@
 // app.config.ts - CONFIGURAÇÃO GLOBAL da aplicação.
-import { ApplicationConfig, LOCALE_ID, provideBrowserGlobalErrorListeners } from '@angular/core';
+// Semana 7 · Aula 1: Store do NgRx (estado global), effects e Redux DevTools.
+// Semana 7 · Aula 2: interceptor HTTP de autenticação.
+import { ApplicationConfig, LOCALE_ID, isDevMode, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import localePt from '@angular/common/locales/pt';
 import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
+import { provideEffects } from '@ngrx/effects';
+import { provideState, provideStore } from '@ngrx/store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideNgxMask } from 'ngx-mask';
-
-// TODO 1 (BIBLIOTECAS NO PROJETO) - parte C: a biblioteca de terceiros ngx-mask precisa de um provider.
-//   1) importe:  import { provideNgxMask } from 'ngx-mask';
-//   2) acrescente  provideNgxMask()  no final do array providers.
-// (Antes, no terminal:  npm install ngx-mask)
+import { authInterceptor } from '@core/auth/auth-interceptor';
+import * as cursosEffects from '@core/state/cursos.effects';
+import { cursosFeature } from '@core/state/cursos.feature';
+import { routes } from './app.routes';
 
 registerLocaleData(localePt);
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideRouter(routes),
-    provideHttpClient(),
+    // TODO 3 - parte B: registre o interceptor. Troque a linha abaixo por:
+      provideHttpClient(withInterceptors([authInterceptor])),
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     provideNgxMask(),
+
+    // NgRx: a Store (o "cofre" central), a fatia "cursos" e os effects
+    provideStore(),
+    provideState(cursosFeature),
+    provideEffects(cursosEffects),
+    // Redux DevTools (extensão do Chrome): histórico de actions e "viagem no tempo"
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],
 };

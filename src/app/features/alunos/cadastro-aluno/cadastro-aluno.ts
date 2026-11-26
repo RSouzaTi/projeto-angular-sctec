@@ -1,10 +1,11 @@
 // cadastro-aluno.ts - FORMULÁRIO REATIVO (Semana 5).
-// Semana 6 · Aula 3: campos do Angular Material, máscaras do ngx-mask e aviso com MatSnackBar.
+// Semana 6 · Aula 3: campos do Angular Material (mat-form-field), máscaras do ngx-mask e
+// aviso de sucesso com MatSnackBar (um SERVICE do Material, pedido com inject()).
 import { Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CepService } from '@core/services/cep-service';
 import { Aluno, Endereco, SharedModule } from '@shared';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cadastro-aluno',
@@ -17,13 +18,9 @@ export class CadastroAluno {
   private cepService = inject(CepService);
   private snackBar = inject(MatSnackBar);
 
-  // TODO 6 (SNACKBAR) - parte A: o MatSnackBar é um SERVICE do Material. Peça com inject():
-  //   import { MatSnackBar } from '@angular/material/snack-bar';
-  //   private snackBar = inject(MatSnackBar);
-
   readonly cursos = ['Angular', 'React', 'Java', 'Python', 'Banco de Dados'];
 
-  // As validações NÃO mudam: o ngx-mask entrega ao form só os NÚMEROS (sem "(", ")" e "-").
+  // As validações NÃO mudaram: o ngx-mask entrega ao form só os NÚMEROS (sem "(", ")" e "-").
   form = this.fb.group({
     nome: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
@@ -37,23 +34,15 @@ export class CadastroAluno {
   carregando = signal(false);
   erroCep = signal('');
 
-  // Usado pelos campos ANTIGOS. Depois do TODO 5, o <mat-error> faz isso sozinho e este método pode sair.
-  invalido(campo: string): boolean {
-    const controle = this.form.get(campo);
-    return !!controle && controle.invalid && controle.touched;
-  }
-
   enviar(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      // TODO 6 - parte B: avise o usuário:
-       this.snackBar.open('Confira os campos destacados em vermelho.', 'OK', { duration: 3000 });
+      this.snackBar.open('Confira os campos destacados em vermelho.', 'OK', { duration: 3000 });
       return;
     }
     const dados = this.form.getRawValue();
     this.alunoSalvo.set({ ...dados, cadastradoEm: new Date() });
-    // TODO 6 - parte C: mostre o sucesso:
-      this.snackBar.open(`Aluno ${dados.nome} cadastrado com sucesso!`, 'Fechar', { duration: 4000 });
+    this.snackBar.open(`Aluno ${dados.nome} cadastrado com sucesso!`, 'Fechar', { duration: 4000 });
   }
 
   limpar(): void {
